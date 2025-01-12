@@ -19,9 +19,6 @@ This is a solution to the [In-browser markdown editor challenge on Frontend Ment
   - [Acknowledgments](#acknowledgments)
 - [Features built so far](#features-built-so-far)
 - [Features to work on](#features-to-work-on)
-- [Steps for protected component in react](#steps-for-protected-component-in-react)
-- [TODO:](#todo)
-- [TODO: Displaying all the fetched docs in the expandable nav and in the previewer](#todo-displaying-all-the-fetched-docs-in-the-expandable-nav-and-in-the-previewer)
 
 **Note: Delete this note and update the table of contents based on what sections you keep.**
 
@@ -175,21 +172,3 @@ export { healthCheck }
   test-user
   test@gmail.com
   test123
-
-# Steps for protected component in react
-
-- First login and store the access token in-memory(react-context) --> Done
-- Now when clicked on login, it should take us to `MarkdownEditor` component --> Done
-- The component is protected so before rendering we will pass another reqeuest to check if the token is valid or not. If it's valid go to the `/markdown` route but if it's not then first refresh the token to generate new refresh and access tokens. Also check if the access token is expired or not. If it is expired then generate a new access token using the refresh token but if both are expired then just redirect to the login page. If the user logs in again then both the tokens are generated again.
-- Similar steps will be followed for all the other protected components
-
-# TODO:
-
-- Read about the useEffect cleanup function --> [React useEffect cleanup](https://medium.com/@vishalkalia.er/what-is-the-useeffect-cleanup-function-and-how-it-works-83d8c67a1a10)
-
-# TODO: Displaying all the fetched docs in the expandable nav and in the previewer
-
-- Fetch the created docs --> Done
-- Store all these docs in a global storage which will be zustand --> Done
-- Modify the docs by adding another parameter which is going to be `isSelectedFile` --> Done
-- When clicked on any of the files, make the `isSelectedFile` true and display that file name at the top in a tab format --> Done
