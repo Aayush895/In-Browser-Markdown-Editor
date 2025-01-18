@@ -1,1 +1,1 @@
-export const DB_NAME = 'markdownEditor'
+export const DB_NAME = "markdownEditor";
