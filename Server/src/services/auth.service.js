@@ -30,3 +30,40 @@ export async function signupService(userData) {
     throw error;
   }
 }
+
+export async function loginService(loginInfo) {
+  try {
+    const doesUserExist = await checkUser(loginInfo.email);
+    if (!doesUserExist) {
+      throw new ApiError("User does not exist", StatusCodes.BAD_REQUEST);
+    }
+
+    const isPassValid = await doesUserExist.isPasswordCorrect(
+      loginInfo.password,
+    );
+    if (!isPassValid) {
+      throw new ApiError(
+        "Invalid password, please try again later!",
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
+    const accessToken = await doesUserExist.generateAccessToken();
+    const refreshToken = await doesUserExist.generateRefreshToken();
+
+    return {
+      userInfo: doesUserExist,
+      accessToken,
+      refreshToken
+    };
+  } catch (error) {
+    if (!(error instanceof ApiError)) {
+      throw new ApiError(
+        "An unexpected error occured which is related to login",
+        StatusCodes.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    throw error;
+  }
+}
