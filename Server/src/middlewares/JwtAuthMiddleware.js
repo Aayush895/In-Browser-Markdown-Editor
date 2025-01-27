@@ -7,7 +7,7 @@ async function jwtAuth(req, res, next) {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      let token = req.authorization.split(" ")[1];
+      let token = req.headers.authorization.split(" ")[1];
       const decodedToken = jwt.verify(token, JWT_SECRET);
 
       req.user = await User.findById(decodedToken.id).select("-password");

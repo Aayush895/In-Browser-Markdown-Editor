@@ -1,7 +1,10 @@
 import { StatusCodes } from "http-status-codes";
+import jwt from "jsonwebtoken";
 import apiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
 import { signupService, loginService } from "../services/auth.service.js";
+import { REFRESH_TOKEN_SECRET } from "../config/serverConfig.js";
+import { User } from "../models/users.model.js";
 
 export async function signup(req, res, next) {
   try {
@@ -65,5 +68,46 @@ export async function login(req, res, next) {
     );
   } catch (error) {
     next(error);
+  }
+}
+
+export async function refreshTokens(req, res, next) {
+  const incomingRefreshToken = req.cookies.refreshToken;
+  if (!incomingRefreshToken) {
+    throw new ApiError("Refresh token not received", StatusCodes.UNAUTHORIZED);
+  }
+
+  try {
+    const decodeRefreshToken = await jwt.verify(
+      incomingRefreshToken,
+      REFRESH_TOKEN_SECRET,
+    );
+
+    const user = await User.findById(decodeRefreshToken?._id);
+
+    if (!user) {
+      throw new ApiError("Invalid refresh token", StatusCodes.UNAUTHORIZED);
+    }
+
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
+
+    return apiResponse(
+      req,
+      res,
+      accessToken,
+      StatusCodes.OK,
+      "New Access and Refresh tokens were generated successfully",
+    );
+  } catch (error) {
+    throw new ApiError(
+      error?.message || "Invalid refresh token",
+      StatusCodes.UNAUTHORIZED,
+    );
   }
 }
