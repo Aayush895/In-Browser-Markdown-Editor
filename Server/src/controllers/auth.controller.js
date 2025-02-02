@@ -71,6 +71,21 @@ export async function login(req, res, next) {
   }
 }
 
+export async function logout(req, res, next) {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: true,
+  });
+
+  return apiResponse(
+    req,
+    res,
+    {},
+    StatusCodes.OK,
+    "User logged out successfully",
+  );
+}
+
 export async function refreshTokens(req, res, next) {
   const incomingRefreshToken = req.cookies.refreshToken;
   if (!incomingRefreshToken) {
