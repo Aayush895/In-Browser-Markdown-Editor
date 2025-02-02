@@ -21,9 +21,8 @@ async function jwtAuth(req, res, next) {
     if (!token) {
       throw new ApiError("No token provided", StatusCodes.UNAUTHORIZED);
     }
-    console.log(token);
+    
     const decodedToken = await jwt.verify(token, ACCESS_TOKEN_SECRET);
-    console.log('TOKEN: ', decodedToken);
     const user = await User.findById(decodedToken._id).select("-password");
 
     if (!user) {
