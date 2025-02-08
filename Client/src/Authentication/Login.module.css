@@ -1,0 +1,70 @@
+#loginContainer {
+  border: 1px solid;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white1);
+  font-family: "Roboto Mono", monospace;
+}
+
+#formContainer {
+  width: 25%;
+  padding: 1rem 2rem;
+  background-color: var(--white2);
+  border-radius: 0.35rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+#header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+#formContainer > form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+#formContainer > form > label {
+  margin-bottom: 0.5rem;
+}
+
+#formContainer > form > input {
+  margin-bottom: 2rem;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid var(--gray3);
+  border-radius: 0.5rem;
+}
+
+#formContainer > form > button {
+  padding: 0.75rem 0;
+  background-color: var(--orange1);
+  color: var(--white2);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+#formContainer > form > button:hover {
+  background-color: var(--orange2);
+}
+
+#formContainer > p {
+  text-align: center;
+}
+
+#formContainer > p span {
+  color: var(--orange2);
+  cursor: pointer;
+}
+
+#formContainer > p > a {
+  text-decoration: none;
+}
+
+#formContainer > p span:hover {
+  text-decoration: underline;
+}
