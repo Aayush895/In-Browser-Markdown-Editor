@@ -48,12 +48,13 @@ export async function login(req, res, next) {
       );
     }
 
-    const { userInfo, accessToken, refreshToken } = await loginService({
-      email,
-      password,
-    });
+    const { userInfo, accessToken, expiresAt, refreshToken } =
+      await loginService({
+        email,
+        password,
+      });
 
-    const responseData = { userInfo, accessToken };
+    const responseData = { userInfo, accessToken, expiresAt };
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       sameSite: "strict",

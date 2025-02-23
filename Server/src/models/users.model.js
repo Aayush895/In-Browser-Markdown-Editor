@@ -49,7 +49,9 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 };
 
 userSchema.methods.generateAccessToken = function () {
-  return jwt.sign(
+  const expiresInSeconds = 24 * 60 * 60;
+  const expiresAt = Math.floor(Date.now() / 1000) + expiresInSeconds;
+  const accessToken = jwt.sign(
     {
       _id: this._id,
       username: this.username,
@@ -58,6 +60,8 @@ userSchema.methods.generateAccessToken = function () {
     ACCESS_TOKEN_SECRET,
     { expiresIn: ACCESS_TOKEN_EXPIRY },
   );
+
+  return {accessToken, expiresAt};
 };
 
 userSchema.methods.generateRefreshToken = function () {

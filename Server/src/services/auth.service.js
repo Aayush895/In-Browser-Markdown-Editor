@@ -48,13 +48,15 @@ export async function loginService(loginInfo) {
       );
     }
 
-    const accessToken = await doesUserExist.generateAccessToken();
+    const { accessToken, expiresAt } =
+      await doesUserExist.generateAccessToken();
     const refreshToken = await doesUserExist.generateRefreshToken();
 
     return {
       userInfo: doesUserExist,
       accessToken,
-      refreshToken
+      expiresAt,
+      refreshToken,
     };
   } catch (error) {
     if (!(error instanceof ApiError)) {
