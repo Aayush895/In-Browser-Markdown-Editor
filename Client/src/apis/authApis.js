@@ -29,8 +29,7 @@ export async function login(userData) {
   if (
     !userData.username ||
     !userData.email ||
-    !userData.password ||
-    !userData.profilePic
+    !userData.password
   ) {
     throw new Error('Please provide user data for login!')
   }
