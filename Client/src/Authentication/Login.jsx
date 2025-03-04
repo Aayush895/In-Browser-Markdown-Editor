@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { login } from '../apis/authApis'
+import UserContext from '../context/UserContext'
 import style from './Login.module.css'
 
 function Login() {
+  const { loginInfo, setloginInfo } = useContext(UserContext)
   const [userInfo, setuserInfo] = useState({
     username: '',
     email: '',
@@ -27,9 +29,16 @@ function Login() {
       password: '',
     })
 
-    console.log('LOGGING LOGIN RESPONSE: ', response)
+    setloginInfo({
+      accessToken: response?.data?.accessToken,
+      expiresAt: response?.data?.expiresAt,
+      userInfo: response?.data?.userInfo,
+      message: response?.message,
+      success: response?.success,
+    })
   }
 
+  console.log('LOGGING LOGIN RESPONSE: ', loginInfo)
   return (
     <div id={style.loginContainer}>
       <div id={style.formContainer}>

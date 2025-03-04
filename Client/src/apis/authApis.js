@@ -1,4 +1,4 @@
-import { signupAxios, loginAxios } from '../utils'
+import { signupAxios, loginAxios, refreshTokenAxios } from '../utils'
 
 export async function signup(userData) {
   if (
@@ -26,11 +26,7 @@ export async function signup(userData) {
 }
 
 export async function login(userData) {
-  if (
-    !userData.username ||
-    !userData.email ||
-    !userData.password
-  ) {
+  if (!userData.username || !userData.email || !userData.password) {
     throw new Error('Please provide user data for login!')
   }
 
@@ -42,3 +38,5 @@ export async function login(userData) {
 
   return response.data
 }
+
+export async function refreshTokens() {}
